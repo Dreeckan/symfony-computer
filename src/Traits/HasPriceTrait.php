@@ -17,6 +17,11 @@ trait HasPriceTrait
         return $this->price;
     }
 
+    public function getRealPrice(): ?float
+    {
+        return $this->price / 100;
+    }
+
     public function setPrice(int $price): self
     {
         $this->price = $price;

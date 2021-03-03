@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Component;
 use App\Form\ComponentType;
+use App\Repository\ComponentRepository;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +19,12 @@ class ComponentController extends AbstractController
     /**
      * @Route("/", name="component_index")
      */
-    public function index(): Response
+    public function index(ComponentRepository $repository): Response
     {
+        $components = $repository->findForIndex();
+
         return $this->render('component/index.html.twig', [
-            'controller_name' => 'ComponentController',
+            'components' => $components,
         ]);
     }
 
