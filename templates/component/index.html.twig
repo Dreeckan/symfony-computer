@@ -6,7 +6,7 @@
 
 {% block body %}
     <a href="{{ path('component_new') }}">Créer un nouveau composant</a>
-    <table>
+    <table class="table">
         <tr>
             <th>Id</th>
             <th>Nom</th>
@@ -24,7 +24,7 @@
                 <td>{{ component.name }}</td>
                 <td>{{ component.brand }}</td>
                 <td>{{ component.type }}</td>
-                <td>{{ component.price|number_format(2, ',', ' ') }}</td>
+                <td>{{ component.realPrice|number_format(2, ',', ' ') }}€</td>
                 <td>{{ component.createdAt|date('d/m/Y h:i:s') }}</td>
                 <td>{{ component.UpdatedAt|date('d/m/Y h:i:s') }}</td>
                 <td>
