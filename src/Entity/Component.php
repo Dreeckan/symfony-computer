@@ -8,6 +8,7 @@ use App\Traits\HasNameTrait;
 use App\Traits\HasPriceTrait;
 use App\Traits\HasTimestampTrait;
 use App\Traits\HasTypeTrait;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,6 +39,8 @@ class Component
     public function __construct()
     {
         $this->computers = new ArrayCollection();
+        $this->created_at = new DateTime();
+        $this->updated_at = new DateTime();
     }
 
     public function getId(): ?int

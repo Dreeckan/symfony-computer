@@ -1,20 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ComponentController!{% endblock %}
+{% block title %}
+    Liste des composants
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/remij/Work/Formation/HumanBooster/symfony-computer/src/Controller/ComponentController.php'|file_link(0) }}">src/Controller/ComponentController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/remij/Work/Formation/HumanBooster/symfony-computer/templates/component/index.html.twig'|file_link(0) }}">templates/component/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <a href="{{ path('component_new') }}">Créer un nouveau composant</a>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Marque</th>
+            <th>Type</th>
+            <th>Prix</th>
+            <th>Créé le</th>
+            <th>Mise à jour le</th>
+            <th>Ordinateurs associés</th>
+            <th>Actions</th>
+        </tr>
+        {% for component in components %}
+            <tr>
+                <td>{{ component.id }}</td>
+                <td>{{ component.name }}</td>
+                <td>{{ component.brand }}</td>
+                <td>{{ component.type }}</td>
+                <td>{{ component.price|number_format(2, ',', ' ') }}</td>
+                <td>{{ component.createdAt|date('d/m/Y h:i:s') }}</td>
+                <td>{{ component.UpdatedAt|date('d/m/Y h:i:s') }}</td>
+                <td>
+                    {% for computer in component.computers %}
+                        {{ computer.name }} <br />
+                    {% endfor %}
+                </td>
+                <td></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ path('component_new') }}">Créer un nouveau composant</a>
 {% endblock %}
