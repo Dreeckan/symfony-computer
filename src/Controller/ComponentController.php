@@ -5,7 +5,8 @@ namespace App\Controller;
 use App\Entity\Component;
 use App\Form\ComponentType;
 use App\Repository\ComponentRepository;
-use Doctrine\ORM\EntityManager;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,7 @@ class ComponentController extends AbstractController
     /**
      * @Route("/new", name="component_new")
      */
-    public function new(Request $request, EntityManager $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $component = new Component();
 
@@ -39,6 +40,7 @@ class ComponentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $component->setUpdatedAt(new DateTime());
             $entityManager->persist($component);
             $entityManager->flush();
 

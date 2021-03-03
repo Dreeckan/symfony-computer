@@ -24,6 +24,17 @@ class Component
     use HasTimestampTrait;
     use HasTypeTrait;
 
+    const AVAILABLE_TYPES = [
+        'CPU'                 => 'cpu',
+        'Mémoire vive'        => 'ram',
+        'carte graphique'     => 'graphicCard',
+        'boitier'             => 'case',
+        'alimentation'        => 'power',
+        'disque dur (ou SSD)' => 'hdd',
+        'carte mère'          => 'motherBoard',
+        'carte réseau'        => 'network',
+    ];
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -73,5 +84,10 @@ class Component
         }
 
         return $this;
+    }
+
+    public function getTypes(): array
+    {
+        return self::AVAILABLE_TYPES;
     }
 }
