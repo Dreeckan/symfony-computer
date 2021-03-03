@@ -36,13 +36,13 @@ class Computer
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Device::class, inversedBy="computers")
+     * @ORM\ManyToMany(targetEntity=Device::class, inversedBy="computers", cascade={"persist"})
      * @ORM\JoinTable(name="computer_has_device")
      */
     private $devices;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Component::class, inversedBy="computers")
+     * @ORM\ManyToMany(targetEntity=Component::class, inversedBy="computers", cascade={"persist"})
      * @ORM\JoinTable(name="computer_has_component")
      */
     private $components;
@@ -110,5 +110,31 @@ class Computer
     public function getTypes(): array
     {
         return array_flip(self::AVAILABLE_TYPES);
+    }
+
+    public function getPrice(): float
+    {
+        $price = 0;
+        foreach ($this->getComponents() as $component) {
+            $price += $component->getRealPrice();
+        }
+
+        foreach ($this->getDevices() as $device) {
+            $price += $device->getRealPrice();
+        }
+        return $price;
+    }
+
+    public function getTypeLabel(): ?string
+    {
+        if (empty(self::AVAILABLE_TYPES[$this->getType()])) {
+            return null;
+        }
+        return self::AVAILABLE_TYPES[$this->getType()];
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->getName();
     }
 }

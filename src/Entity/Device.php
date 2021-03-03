@@ -83,4 +83,22 @@ class Device
 
         return $this;
     }
+
+    public function getTypes(): array
+    {
+        return array_flip(self::AVAILABLE_TYPES);
+    }
+
+    public function getTypeLabel(): ?string
+    {
+        if (empty(self::AVAILABLE_TYPES[$this->getType()])) {
+            return null;
+        }
+        return self::AVAILABLE_TYPES[$this->getType()];
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->getName();
+    }
 }

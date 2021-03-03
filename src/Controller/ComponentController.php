@@ -61,4 +61,15 @@ class ComponentController extends AbstractController
             'component' => $component,
         ]);
     }
+
+    /**
+     * @Route("/{id}/remove", name="component_remove")
+     */
+    public function remove(Component $component, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($component);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('component_index');
+    }
 }

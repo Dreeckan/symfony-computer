@@ -26,7 +26,7 @@ class ComponentType extends AbstractType
                 'currency' => 'EUR',
                 'divisor'  => 100,
             ])
-//            ->add('computers')
+            ->add('computers')
         ;
     }
 
