@@ -31,10 +31,19 @@ class ComponentController extends AbstractController
 
     /**
      * @Route("/new", name="component_new")
+     * @Route("/{id}/edit", name="component_edit")
+     *
+     * @param Request                $request
+     * @param EntityManagerInterface $entityManager
+     * @param Component|null         $component
+     *
+     * @return Response
      */
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function form(Request $request, EntityManagerInterface $entityManager, Component $component = null): Response
     {
-        $component = new Component();
+        if (empty($component)) {
+            $component = new Component();
+        }
 
         $form = $this->createForm(ComponentType::class, $component);
         $form->handleRequest($request);
@@ -47,8 +56,9 @@ class ComponentController extends AbstractController
             return $this->redirectToRoute('component_index');
         }
 
-        return $this->render('component/new.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('component/form.html.twig', [
+            'form'      => $form->createView(),
+            'component' => $component,
         ]);
     }
 }
