@@ -7,6 +7,7 @@ use App\Traits\HasDescriptionTrait;
 use App\Traits\HasNameTrait;
 use App\Traits\HasTimestampTrait;
 use App\Traits\HasTypeTrait;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,6 +21,12 @@ class Computer
     use HasDescriptionTrait;
     use HasTimestampTrait;
     use HasTypeTrait;
+
+    const AVAILABLE_TYPES = [
+        'desktop' => 'Ordinateur de bureau',
+        'laptop'  => 'Ordinateur portable',
+        'tablet'  => 'Tablette',
+    ];
 
     /**
      * @ORM\Id
@@ -42,6 +49,7 @@ class Computer
 
     public function __construct()
     {
+        $this->created_at = new DateTime();
         $this->devices = new ArrayCollection();
         $this->components = new ArrayCollection();
     }
@@ -97,5 +105,10 @@ class Computer
         $this->components->removeElement($component);
 
         return $this;
+    }
+
+    public function getTypes(): array
+    {
+        return array_flip(self::AVAILABLE_TYPES);
     }
 }
