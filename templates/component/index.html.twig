@@ -32,7 +32,13 @@
                         {{ computer.name }} <br />
                     {% endfor %}
                 </td>
-                <td></td>
+                <td>
+                    <a href="{{ path('component_edit', {
+                        id: component.id,
+                    }) }}" class="btn btn-primary">
+                        Modifier
+                    </a>
+                </td>
             </tr>
         {% endfor %}
     </table>
