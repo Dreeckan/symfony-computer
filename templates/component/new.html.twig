@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <h1>Ajouter un composant</h1>
 {#    {{ form(form) }}#} {# Affiche directement tout le formulaire #}
     {{ form_start(form) }} {# Affiche la balise <form> #}
         {{ form_row(form.name) }} {# Affiche une div, contenant un label et un input pour le champ name #}
+        {{ form_row(form.type) }}
         {{ form_row(form.brand) }}
         {{ form_row(form.price) }}
-        {{ form_row(form.type) }}
-        {{ form_row(form.computers) }}
-        <button type="submit">Valider</button>
+{#        {{ form_row(form.computers) }}#}
+        <button type="submit" class="btn btn-primary">Valider</button>
     {{ form_end(form) }}{# Affiche la balise </form> et tous les champs de formulaire qui n'ont pas été affiché #}
 {% endblock %}
 
