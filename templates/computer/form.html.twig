@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% set title = "Nouvel ordinateur" %}
+{% if computer.id %}
+    {% set title = 'Modifier un ordinateur "' ~ computer.name ~ '"' %}
+{% endif %}
+
+{% block body %}
+    <h1>{{ title }}</h1>
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+
+        {{ form_row(form.type) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.components) }}
+        {{ form_row(form.devices) }}
+
+        {{ form_rest(form) }}
+        <button type="submit" class="btn btn-primary">Valider</button>
+        {% if computer.id %}
+            <a href="{{ path('computer_remove', {
+                id: computer.id,
+            }) }}" class="btn btn-danger">
+                Supprimer
+            </a>
+        {% endif %}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+

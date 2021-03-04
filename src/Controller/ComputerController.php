@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Computer;
 use App\Form\ComputerType;
+use App\Repository\ComputerRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,29 +20,37 @@ class ComputerController extends AbstractController
     /**
      * @Route("/", name="computer_index")
      */
-    public function index(): Response
+    public function index(ComputerRepository $repository): Response
     {
+        $computers = $repository->findBy([], [
+            'updated_at' => 'DESC',
+        ]);
         return $this->render('computer/index.html.twig', [
-            'controller_name' => 'ComputerController',
+            'computers' => $computers,
         ]);
     }
 
     /**
      * @Route("/new", name="computer_new")
+     * @Route("/{id}/edit", name="computer_edit")
+     *
+     * @param Request                $request
+     * @param EntityManagerInterface $em
+     * @param Computer|null          $computer
+     *
+     * @return Response
      */
-    public function new(Request $request, EntityManagerInterface $em): Response
+    public function form(Request $request, EntityManagerInterface $em, Computer $computer = null): Response
     {
-        $computer = new Computer();
-        $computer->setName('default');
+        if (empty($computer)) {
+            $computer = new Computer();
+        }
 
         // On crée le formulaire (objet de traitement)
         // Premier paramètre : le formulaire type (FQCN)
         // Deuxième paramètre : l'objet à manipuler (à synchroniser avec le formulaire)
         // Troisième paramètre : des options du formulaire
-        $form = $this->createForm(ComputerType::class, $computer, [
-            'method' => 'POST',
-            'action' => $this->generateUrl('computer_new'),
-        ]);
+        $form = $this->createForm(ComputerType::class, $computer);
 
         // On dit explicitement au formulaire de traiter ce que contient la requête (objet Request)
         $form->handleRequest($request);
@@ -58,8 +67,20 @@ class ComputerController extends AbstractController
             return $this->redirectToRoute('computer_index');
         }
 
-        return $this->render('computer/new.html.twig', [
-            'form' => $form->createView(),
+        return $this->render('computer/form.html.twig', [
+            'form'     => $form->createView(),
+            'computer' => $computer,
         ]);
+    }
+
+    /**
+     * @Route("/{id}/remove", name="computer_remove")
+     */
+    public function remove(Computer $computer, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($computer);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('computer_index');
     }
 }

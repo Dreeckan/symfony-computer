@@ -23,10 +23,10 @@
                 <td>{{ component.id }}</td>
                 <td>{{ component.name }}</td>
                 <td>{{ component.brand }}</td>
-                <td>{{ component.type }}</td>
+                <td>{{ component.typeLabel }}</td>
                 <td>{{ component.realPrice|number_format(2, ',', ' ') }}€</td>
-                <td>{{ component.createdAt|date('d/m/Y h:i:s') }}</td>
-                <td>{{ component.UpdatedAt|date('d/m/Y h:i:s') }}</td>
+                <td>{{ component.createdAt|date('d/m/Y H:i:s') }}</td>
+                <td>{{ component.UpdatedAt|date('d/m/Y H:i:s') }}</td>
                 <td>
                     {% for computer in component.computers %}
                         {{ computer.name }} <br />
@@ -37,6 +37,11 @@
                         id: component.id,
                     }) }}" class="btn btn-primary">
                         Modifier
+                    </a>
+                    <a href="{{ path('component_remove', {
+                        id: component.id,
+                    }) }}" class="btn btn-danger">
+                        Supprimer
                     </a>
                 </td>
             </tr>

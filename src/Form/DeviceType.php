@@ -21,13 +21,14 @@ class DeviceType extends AbstractType
             ->add('description', TextareaType::class)
             ->add('price', MoneyType::class, [
                 'currency' => 'EUR', // Défini la monnaie utilisée
-                'divisor'  => 100,   //
+                'divisor'  => 100,   // On stocke les prix en centimes, il faut donc diviser les prix affichés par 100, par rapport à la base
             ])
             ->add('type', ChoiceType::class, [
                 'choices'  => array_flip(Device::AVAILABLE_TYPES),
                 'multiple' => false,
                 'expanded' => false,
             ])
+            ->add('computers')
         ;
     }
 

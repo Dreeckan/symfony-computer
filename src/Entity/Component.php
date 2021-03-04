@@ -90,4 +90,14 @@ class Component
     {
         return self::AVAILABLE_TYPES;
     }
+
+    public function getTypeLabel(): ?string
+    {
+        return array_search($this->getType(), self::AVAILABLE_TYPES);
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->getName();
+    }
 }

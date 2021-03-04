@@ -1,20 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DeviceController!{% endblock %}
+{% block title %}
+    Liste des périphériques
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/remij/Work/Formation/HumanBooster/symfony-computer/src/Controller/DeviceController.php'|file_link(0) }}">src/Controller/DeviceController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/remij/Work/Formation/HumanBooster/symfony-computer/templates/device/index.html.twig'|file_link(0) }}">templates/device/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <a href="{{ path('device_new') }}">Créer un nouveau périphérique</a>
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Marque</th>
+            <th>Type</th>
+            <th>Prix</th>
+            <th>Créé le</th>
+            <th>Mise à jour le</th>
+            <th>Ordinateurs associés</th>
+            <th>Actions</th>
+        </tr>
+        {% for device in devices %}
+            <tr>
+                <td>{{ device.id }}</td>
+                <td>{{ device.name }}</td>
+                <td>{{ device.description }}</td>
+                <td>{{ device.brand }}</td>
+                <td>{{ device.typeLabel }}</td>
+                <td>{{ device.realPrice|number_format(2, ',', ' ') }}€</td>
+                <td>{{ device.createdAt|date('d/m/Y H:i:s') }}</td>
+                <td>{{ device.UpdatedAt|date('d/m/Y H:i:s') }}</td>
+                <td>
+                    {% for computer in device.computers %}
+                        {{ computer.name }} <br />
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ path('device_edit', {
+                        id: device.id,
+                    }) }}" class="btn btn-primary">
+                        Modifier
+                    </a>
+                    <a href="{{ path('device_remove', {
+                        id: device.id,
+                    }) }}" class="btn btn-danger">
+                        Supprimer
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ path('device_new') }}">Créer un nouveau périphérique</a>
 {% endblock %}

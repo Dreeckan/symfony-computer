@@ -1,16 +1,25 @@
 {% extends 'base.html.twig' %}
 
+{% set title = "Nouveau périphérique" %}
+{% if device.id %}
+    {% set title = 'Modifier un périphérique "' ~ device.name ~ '"' %}
+{% endif %}
+
 {% block body %}
+    <h1>
+        {{ title }}
+    </h1>
     {{ form_start(form) }}
         {{ form_row(form.name) }}
         {{ form_row(form.brand) }}
         {{ form_row(form.description) }}
         {{ form_row(form.price) }}
         {{ form_row(form.type) }}
-        <button type="submit">Valider</button>
+        {{ form_row(form.computers) }}
+        <button type="submit" class="btn btn-primary">Valider</button>
     {{ form_end(form) }}
 {% endblock %}
 
 {% block title %}
-
+    {{ title }}
 {% endblock %}
