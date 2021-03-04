@@ -50,10 +50,7 @@ class ComputerController extends AbstractController
         // Premier paramètre : le formulaire type (FQCN)
         // Deuxième paramètre : l'objet à manipuler (à synchroniser avec le formulaire)
         // Troisième paramètre : des options du formulaire
-        $form = $this->createForm(ComputerType::class, $computer, [
-            'method' => 'POST',
-            'action' => $this->generateUrl('computer_new'),
-        ]);
+        $form = $this->createForm(ComputerType::class, $computer);
 
         // On dit explicitement au formulaire de traiter ce que contient la requête (objet Request)
         $form->handleRequest($request);
