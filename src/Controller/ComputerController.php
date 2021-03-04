@@ -31,6 +31,8 @@ class ComputerController extends AbstractController
     }
 
     /**
+     * Ici, vous pourriez avoir 2 actions différentes (new et edit, par exemple) pour gérer la création et l'édition d'un ordinateur
+     *
      * @Route("/new", name="computer_new")
      * @Route("/{id}/edit", name="computer_edit")
      *

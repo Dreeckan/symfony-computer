@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Accueil
+{% endblock %}
+
+{% block body %}
+    <h1>
+        Statistiques
+    </h1>
+    <ul>
+        <li>{{ countComplete }} ordinateurs préparés (prêts à être vendus)</li>
+        <li>Prix moyen des ordinateurs préparés : {{ averagePrice / 100 }}€</li>
+        <li>Prix total des composants entrés : {{ averageComponentPrice / 100 }}€</li>
+        <li>Prix total des périphériques entrés : {{ averageDevicePrice / 100 }}€</li>
+    </ul>
+{% endblock %}

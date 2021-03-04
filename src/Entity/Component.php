@@ -27,12 +27,12 @@ class Component
     const AVAILABLE_TYPES = [
         'CPU'                 => 'cpu',
         'Mémoire vive'        => 'ram',
-        'carte graphique'     => 'graphicCard',
-        'boitier'             => 'case',
-        'alimentation'        => 'power',
-        'disque dur (ou SSD)' => 'hdd',
-        'carte mère'          => 'motherBoard',
-        'carte réseau'        => 'network',
+        'Carte graphique'     => 'graphicCard',
+        'Boitier'             => 'case',
+        'Alimentation'        => 'power',
+        'Disque dur (ou SSD)' => 'hdd',
+        'Carte mère'          => 'motherBoard',
+        'Carte réseau'        => 'network',
     ];
 
     /**
@@ -98,6 +98,6 @@ class Component
 
     public function __toString(): string
     {
-        return (string) $this->getName();
+        return (string) $this->getName().' ('.$this->getTypeLabel().')';
     }
 }

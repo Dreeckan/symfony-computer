@@ -2,7 +2,11 @@
 
 namespace App\Form;
 
+use App\Entity\Component;
 use App\Entity\Computer;
+use App\Entity\Device;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -14,20 +18,37 @@ class ComputerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, [
-                'attr'     => [
-                    'maxlength' => 128,
-                ],
-                'required' => true,
-            ])
+            ->add('name', TextType::class)
             ->add('description')
             ->add('type', ChoiceType::class, [
                 'choices'  => array_flip(Computer::AVAILABLE_TYPES),
                 'multiple' => false,
-                'expanded' => false,
+                'expanded' => true,
             ])
-            ->add('devices')
-            ->add('components')
+            ->add('devices', EntityType::class, [
+                'class'         => Device::class,
+                'multiple'      => true,
+                'expanded'      => true,
+                'query_builder' => function (EntityRepository $repository) {
+                    return $repository
+                        ->createQueryBuilder('d')
+                        ->orderBy('d.name', 'ASC')
+                    ;
+                },
+//                'choice_label' => 'name', // Pour afficher un élément Device, on va chercher son nom et on l'affiche
+            ])
+            ->add('components', EntityType::class, [
+                'class'         => Component::class,
+                'multiple'      => true,
+                'expanded'      => true,
+                'query_builder' => function (EntityRepository $repository) {
+                    return $repository
+                        ->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC')
+                    ;
+                },
+//                'choice_label' => 'name', // Pour afficher un élément Device, on va chercher son nom et on l'affiche
+            ])
         ;
     }
 
