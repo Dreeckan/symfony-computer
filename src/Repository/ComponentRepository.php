@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Component;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -25,6 +27,20 @@ class ComponentRepository extends ServiceEntityRepository
             ->orderBy('c.updated_at', 'DESC')
             ->getQuery()
             ->getResult()
+        ;
+    }
+
+    /**
+     * @return int
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function averagePrice(): int
+    {
+        return $this->createQueryBuilder('c')
+            ->select('SUM(c.price)')
+            ->getQuery()
+            ->getSingleScalarResult()
         ;
     }
 }

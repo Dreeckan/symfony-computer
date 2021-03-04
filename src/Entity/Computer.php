@@ -133,6 +133,48 @@ class Computer
         return self::AVAILABLE_TYPES[$this->getType()];
     }
 
+    /**
+     * @return bool
+     */
+    public function isComplete(): bool
+    {
+        // Je parcours tous les types de périphériques qui doivent être associés à mon ordinateur
+        foreach (Device::AVAILABLE_TYPES as $type => $name) {
+            // Pour chaque type, je cherche les périphériques associés ayant le type $type
+            $devicesOfType = [];
+            /** @var Device $device */
+            foreach ($this->getDevices() as $device) {
+                if ($device->getType() == $type) {
+                    $devicesOfType[] = $device;
+                }
+            }
+
+            // S'il n'y pas pas (ou qu'il y a trop) de périphérique de ce type, mon ordinateur n'est pas complet / pas valide
+            if (count($devicesOfType) != 1) {
+                return false;
+            }
+        }
+
+        // Je fais de même avec les composants associés à mon ordinateur
+        foreach (Component::AVAILABLE_TYPES as $name => $type) {
+            // Pour chaque type, je cherche les composants associés ayant le type $type
+            $componentsOfType = [];
+            /** @var Component $component */
+            foreach ($this->getComponents() as $component) {
+                if ($component->getType() == $type) {
+                    $componentsOfType[] = $component;
+                }
+            }
+
+            // S'il n'y pas pas (ou qu'il y a trop) de composant de ce type, mon ordinateur n'est pas complet / pas valide
+            if (count($componentsOfType) != 1) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function __toString(): string
     {
         return (string) $this->getName();

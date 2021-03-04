@@ -1,0 +1,12 @@
+{% extends 'menu.html.twig' %}
+
+{% block list %}
+    {% set listAttributes = listAttributes|merge({ class: 'navbar' }) %}
+    {{ parent() }}
+{% endblock %}
+
+{#{% block linkElement %}#}
+{#    {% set linkAttributes = item.linkAttributes|merge({'class': 'menu__link'}) %}#}
+{#    {% set item = item.setLinkAttributes(linkAttributes) %}#}
+{#    {{ parent() }}#}
+{#{% endblock %}#}

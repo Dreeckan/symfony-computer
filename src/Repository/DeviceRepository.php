@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Device;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +19,20 @@ class DeviceRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Device::class);
+    }
+
+    /**
+     * @return int
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function averagePrice(): int
+    {
+        return $this->createQueryBuilder('d')
+            ->select('SUM(d.price)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
     }
 
     // /**
