@@ -34,6 +34,9 @@ class DeviceType extends AbstractType
                 'class'    => Computer::class,
                 'multiple' => true,
                 'required' => false,
+                'attr' => [
+                    'data-choices' => true,
+                ],
             ])
         ;
     }

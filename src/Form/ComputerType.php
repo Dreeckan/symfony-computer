@@ -23,7 +23,7 @@ class ComputerType extends AbstractType
             ->add('type', ChoiceType::class, [
                 'choices'  => array_flip(Computer::AVAILABLE_TYPES),
                 'multiple' => false,
-                'expanded' => true,
+                'expanded' => false,
             ])
             ->add('devices', EntityType::class, [
                 'class'         => Device::class,
@@ -35,7 +35,9 @@ class ComputerType extends AbstractType
                         ->orderBy('d.name', 'ASC')
                     ;
                 },
-//                'choice_label' => 'name', // Pour afficher un élément Device, on va chercher son nom et on l'affiche
+                'attr' => [
+                    'data-choices' => true,
+                ],
             ])
             ->add('components', EntityType::class, [
                 'class'         => Component::class,
@@ -47,7 +49,9 @@ class ComputerType extends AbstractType
                         ->orderBy('c.name', 'ASC')
                     ;
                 },
-//                'choice_label' => 'name', // Pour afficher un élément Device, on va chercher son nom et on l'affiche
+                'attr' => [
+                    'data-choices' => true,
+                ],
             ])
         ;
     }
