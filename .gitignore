@@ -17,3 +17,6 @@
 
 # IDE
 .idea/
+
+# NPM
+node_modules

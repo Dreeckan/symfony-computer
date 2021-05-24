@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Component;
+use App\Entity\Computer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -26,7 +28,11 @@ class ComponentType extends AbstractType
                 'currency' => 'EUR',
                 'divisor'  => 100,
             ])
-            ->add('computers')
+            ->add('computers', EntityType::class, [
+                'class'    => Computer::class,
+                'multiple' => true,
+                'required' => false,
+            ])
         ;
     }
 

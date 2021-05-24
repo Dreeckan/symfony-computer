@@ -28,7 +28,7 @@ class ComputerType extends AbstractType
             ->add('devices', EntityType::class, [
                 'class'         => Device::class,
                 'multiple'      => true,
-                'expanded'      => true,
+                'expanded'      => false,
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository
                         ->createQueryBuilder('d')
@@ -40,7 +40,7 @@ class ComputerType extends AbstractType
             ->add('components', EntityType::class, [
                 'class'         => Component::class,
                 'multiple'      => true,
-                'expanded'      => true,
+                'expanded'      => false,
                 'query_builder' => function (EntityRepository $repository) {
                     return $repository
                         ->createQueryBuilder('c')

@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Computer;
 use App\Entity\Device;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -28,7 +30,11 @@ class DeviceType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
             ])
-            ->add('computers')
+            ->add('computers', EntityType::class, [
+                'class'    => Computer::class,
+                'multiple' => true,
+                'required' => false,
+            ])
         ;
     }
 
